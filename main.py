@@ -4,14 +4,10 @@
 
 import random
 import discord
-import os
-import json
 import asyncio
-import time
 from datetime import datetime
 from discord import app_commands
 from discord.ext import commands
-from discord.ui import View, Button
 from function_sys import *
 from db_handler import *
 
@@ -88,9 +84,9 @@ async def help(interaction: discord.Interaction):
     embed.add_field(name="🎟️ Events", value="🔦 **/events**: Afficher les événement en cours\n"
                                             "ℹ️ **/event_info**: Information détailés d'un event", inline=False)
     embed.set_footer(text=f"Demandé par {interaction.user}")
-    # embed.set_image(url="https://cdn.discordapp.com/attachments/1118913269776793670/1199095326787764355/"
-    #                     "banniere_discord.png?ex=65ca860c&is=65b8110c&hm=352d1d2e87ccb52ca02a4fda942c0fb5"
-    #                     "549bdcff1c6fa2a71472363f141a3717&")
+    embed.set_image(url="https://cdn.discordapp.com/attachments/1118913269776793670/1199095326787764355/"
+                         "banniere_discord.png?ex=65ca860c&is=65b8110c&hm=352d1d2e87ccb52ca02a4fda942c0fb5"
+                         "549bdcff1c6fa2a71472363f141a3717&")
     await interaction.response.send_message(embed=embed, ephemeral=False)
 
 
@@ -130,9 +126,9 @@ async def events_info(interaction: discord.Interaction, id: int):
                     inline=False
                 )
             embed.set_footer(text=f"Créé par {evenement[nb][3]} - ID : {evenement[nb][0]}")
-            # embed.set_image(url="https://cdn.discordapp.com/attachments/1118913269776793670/1199095326787764355/"
-            #                     "banniere_discord.png?ex=65ca860c&is=65b8110c&hm=352d1d2e87ccb52ca02a4fda942c0fb5"
-            #                     "549bdcff1c6fa2a71472363f141a3717&")
+            embed.set_image(url="https://cdn.discordapp.com/attachments/1118913269776793670/1199095326787764355/"
+                                "banniere_discord.png?ex=65ca860c&is=65b8110c&hm=352d1d2e87ccb52ca02a4fda942c0fb5"
+                                "549bdcff1c6fa2a71472363f141a3717&")
             await interaction.response.send_message(embed=embed, ephemeral=False)
         else:
             await interaction.response.send_message("ID non trouvé dans les events en cours", ephemeral=False)
@@ -156,9 +152,9 @@ async def events(interaction: discord.Interaction):
                 )
         embed.set_footer(text=f"Demandé par {interaction.user} - Date & heure : {now.strftime('%d/%m/%Y %H:%M')}")
         embed.set_author(name=f"AtlantaVR - {interaction.user}", icon_url=f"{client.user.avatar}")
-        # embed.set_image(url="https://cdn.discordapp.com/attachments/1118913269776793670/1199095326787764355/"
-        #                     "banniere_discord.png?ex=65ca860c&is=65b8110c&hm=352d1d2e87ccb52ca02a4fda942c0fb5"
-        #                     "549bdcff1c6fa2a71472363f141a3717&")
+        embed.set_image(url="https://cdn.discordapp.com/attachments/1118913269776793670/1199095326787764355/"
+                            "banniere_discord.png?ex=65ca860c&is=65b8110c&hm=352d1d2e87ccb52ca02a4fda942c0fb5"
+                            "549bdcff1c6fa2a71472363f141a3717&")
         await interaction.response.send_message(embed=embed, ephemeral=False)
     except Exception as e:
         await interaction.response.send_message(f"Une erreur inattendue est survenue : {e}\n"
