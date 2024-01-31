@@ -8,10 +8,10 @@ from db_handler import *
 store = False
 
 
-def enregistrer_evenement(auteur, id, date, roles, name):
+async def enregistrer_evenement(auteur, id, date, roles, name):
     try:
-        cur, conn = initialiser_db()
-        enregistrer_evenement(cur, conn, auteur, id, date, roles, name)
+        cur, conn = await initialiser_db()
+        await enregistrer_evenement(cur, conn, auteur, id, date, roles, name)
         return "L'événement a été créé avec succées !"
 
     except FileExistsError as e:

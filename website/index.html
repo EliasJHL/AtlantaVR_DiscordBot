@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<source src="https://assets.codepen.io/3364143/7btrrd.mp4" type="video/mp4">
+<html lang="fr">
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Post an Event</title>
+</head>
+<body>
+    <h1>Post a New Event</h1>
+    <form id="addEventForm" class="form__group field">
+        <div class="form__group field">
+            <input type="text" class="form__field" placeholder="Nom de l'event" name="name" id='name' required/>
+            <label for="name" class="form__label">Nom de l'event</label>
+        </div>
+        <div class="form__group field">
+            <input type="text" class="form__field" placeholder="Liste des rôles" name="liste" id='roles' required/>
+            <label for="roles" class="form__label">Liste des rôles</label>
+        </div>
+        <div class="form__group field">
+            <label for="date" class="form__label">Date de l'event</label>
+            <input type="date" id="date" name="date" placeholder="Date">
+        </div>
+        <input onclick="window.location.reload()" class="bn5" type="submit" value="Envoyer">
+    </form>
+    <h1>Delete an Event</h1>
+    <form id="deleteEventForm">
+        <div>
+            <input type="text" id="id" name="id" placeholder="ID de l'event">
+        </div>
+        <input onclick="window.location.reload()" type="submit" value="Supprimer" class="bn5">
+    </form>
+    <h1>Liste des événements</h1>
+    <table id="eventTable" border="1">
+    <tr>
+        <th>Nom</th>
+        <th>Date</th>
+        <th>Auteur</th>
+        <th>Roles</th>
+        <th>ID</th>
+    </tr>
+</table>
+</body>
+<script>
+document.getElementById('addEventForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    var name = document.getElementById('name').value;
+    var date = document.getElementById('date').value;
+    var roles = document.getElementById('roles').value;
+
+    fetch('http://127.0.0.1:63342/post_event', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            'name': name,
+            'date': date,
+            'roles': roles
+        })
+    })
+    .then(response => response.text())
+    .then(data => console.log(data));
+});
+
+document.getElementById('deleteEventForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    var id = document.getElementById('id').value;
+
+    fetch('http://127.0.0.1:63342/delete_event', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+            'id': id
+        })
+    })
+    .then(response => response.text())
+    .then(data => console.log(data));
+});
+
+fetch('http://127.0.0.1:63342/get_events')
+    .then(response => response.json())
+    .then(data => {
+        const eventTable = document.getElementById('eventTable');
+        data.forEach(event => {
+            const tableRow = document.createElement('tr');
+
+            const nameCell = document.createElement('td');
+            nameCell.textContent = event[1];
+            tableRow.appendChild(nameCell);
+
+            const dateCell = document.createElement('td');
+            dateCell.textContent = event[2];
+            tableRow.appendChild(dateCell);
+
+            const authorCell = document.createElement('td');
+            authorCell.textContent = event[3];
+            tableRow.appendChild(authorCell);
+
+            const rolesCell = document.createElement('td');
+            rolesCell.textContent = event[4];
+            tableRow.appendChild(rolesCell);
+
+            const IDCell = document.createElement('td');
+            IDCell.textContent = event[0];
+            tableRow.appendChild(IDCell);
+
+            eventTable.appendChild(tableRow);
+        });
+    });
+</script>
+</html>

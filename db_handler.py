@@ -9,7 +9,7 @@ import os
 import json
 
 
-def initialiser_db():
+async def initialiser_db():
     conn = sqlite3.connect('evenements.db')
     cur = conn.cursor()
     cur.execute('''
@@ -25,7 +25,7 @@ def initialiser_db():
     return cur, conn
 
 
-def enregistrer_evenement(cur, conn, auteur, id, date, roles, name):
+async def enregistrer_evenement(cur, conn, auteur, id, date, roles, name):
     cur.execute('''
         INSERT INTO evenements (id, name, date, auteur, roles)
         VALUES (?, ?, ?, ?, ?)
@@ -33,20 +33,20 @@ def enregistrer_evenement(cur, conn, auteur, id, date, roles, name):
     conn.commit()
 
 
-def supprimer_evenement(cur, conn, id):
+async def supprimer_evenement(cur, conn, id):
     cur.execute('''
         DELETE FROM evenements WHERE ID = ?
     ''', (id,))
     conn.commit()
 
 
-def display_db():
-    cur, conn = initialiser_db()
+async def display_db():
+    cur, conn = await initialiser_db()
     cur.execute('SELECT * FROM evenements')
     evenements = cur.fetchall()
     return evenements
 
 
-def purge_events(cur, conn):
+async def purge_events(cur, conn):
     cur.execute("DELETE FROM evenements")
     conn.commit()
