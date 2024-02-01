@@ -173,13 +173,13 @@ async def clear(interaction, montant: int):
 
 
 @client.tree.command(name='reserver', description="Permet de réserver un rôle pour un événement")
-@app_commands.describe(id_evenement="Le nombre de messages a supprimer")
-@app_commands.describe(rôle="Le nombre de messages a supprimer")
+@app_commands.describe(id_evenement="ID de l'événement")
+@app_commands.describe(rôle="Le rôle souhaité")
 async def select(interaction: discord.Interaction, id_evenement: int, rôle: str):
     try:
         nb = 0
         id_stock = 0
-        stock = None
+
         evenement = await display_db()
         while nb < len(evenement):
             if evenement[nb][0] == id_evenement:
@@ -189,18 +189,15 @@ async def select(interaction: discord.Interaction, id_evenement: int, rôle: str
         if id_stock != 0:
             for i in range(len(evenement[nb][4].split(", "))):
                 if evenement[nb][4].split(', ')[i] == rôle:
-                    embed = discord.Embed(title=f"Événement {evenement[nb][1]} du {evenement[nb][2]}",
-                                          color=discord.Color.blue())
+                    embed = discord.Embed(title=f"Event **\"{evenement[nb][1]}\"** du **{evenement[nb][2]}**",
+                                          color=discord.Color.yellow())
                     embed.add_field(
-                        name=f"Rôle {i + 1} - {evenement[nb][4].split(', ')[i]}",
-                        value=stock,
+                        name=f" - Rôle **{evenement[nb][4].split(', ')[i]}**",
+                        value=f"\n🔄 Est-ce que vous confirmez la réservation de ce rôle ?\n",
                         inline=False
                     )
-                    embed.set_footer(text=f"Créé par {evenement[nb][3]} - ID : {evenement[nb][0]}")
-                    embed.set_image(url="https://cdn.discordapp.com/attachments/1118913269776793670/1199095326787764355/"
-                                        "banniere_discord.png?ex=65ca860c&is=65b8110c&hm=352d1d2e87ccb52ca02a4fda942c0fb5"
-                                        "549bdcff1c6fa2a71472363f141a3717&")
-                    await interaction.response.send_message(embed=embed, ephemeral=False)
+                    embed.set_footer(text=f"Demande par {interaction.user} - ID de l'event : {evenement[nb][0]}")
+                    await interaction.response.send_message(embed=embed, ephemeral=True)
                     break
         else:
             await interaction.response.send_message("ID non trouvé dans les events actifs", ephemeral=False)
