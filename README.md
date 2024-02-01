@@ -28,8 +28,9 @@
 
    ```json
    {
-       "token": "YOUR_BOT_TOKEN_HERE"
-       "version": "YOUR_VERSION"
+       "token": "YOUR_BOT_TOKEN_HERE",
+       "version": "YOUR_VERSION",
+       "server": "SERVER NAME"
    }
    
 ## Bot Configuration
