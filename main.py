@@ -106,14 +106,14 @@ async def purge(ctx):
 async def events_info(interaction: discord.Interaction, id: int):
     try:
         nb = 0
-        stock = None
+        stock_id = 0
         evenement = await display_db()
-        if evenement is not None and isinstance(evenement, list):
-            while nb < len(evenement) - 1:
-                if evenement[nb][0] == id:
-                    break
-                nb += 1
-        if nb != 0:
+        while nb < len(evenement):
+            if evenement[nb][0] == id:
+                stock_id = evenement[nb][0]
+                break
+            nb += 1
+        if stock_id != 0:
             embed = discord.Embed(title=f"Événement {evenement[nb][1]} du {evenement[nb][2]}", color=discord.Color.blue())
             for i in range(len(evenement[nb][4].split(", "))):
                 if random.randint(0, 1) == 0:
@@ -178,13 +178,15 @@ async def clear(interaction, montant: int):
 async def select(interaction: discord.Interaction, id_evenement: int, rôle: str):
     try:
         nb = 0
+        id_stock = 0
         stock = None
         evenement = await display_db()
         while nb < len(evenement):
             if evenement[nb][0] == id_evenement:
+                id_stock = evenement[nb][0]
                 break
             nb += 1
-        if nb != 0:
+        if id_stock != 0:
             for i in range(len(evenement[nb][4].split(", "))):
                 if evenement[nb][4].split(', ')[i] == rôle:
                     embed = discord.Embed(title=f"Événement {evenement[nb][1]} du {evenement[nb][2]}",
@@ -205,7 +207,6 @@ async def select(interaction: discord.Interaction, id_evenement: int, rôle: str
     except Exception as e:
         await interaction.response.send_message(f"Une erreur inattendue est survenue : {e}\n"
                                                 "Merci de me le signaler → helias5605", ephemeral=False)
-
 
 
 @client.tree.command(name='ping', description="Ping notre bot !")
