@@ -49,7 +49,7 @@ document.getElementById('addEventForm').addEventListener('submit', function(even
     var date = document.getElementById('date').value;
     var roles = document.getElementById('roles').value;
 
-    fetch('http://127.0.0.1:63343/post_event', {
+    fetch('http://127.0.0.1:5000/post_event', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -69,7 +69,7 @@ document.getElementById('deleteEventForm').addEventListener('submit', function(e
 
     var id = document.getElementById('id').value;
 
-    fetch('http://127.0.0.1:63343/delete_event', {
+    fetch('http://127.0.0.1:5000/delete_event', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -82,7 +82,7 @@ document.getElementById('deleteEventForm').addEventListener('submit', function(e
     .then(data => console.log(data));
 });
 
-fetch('http://127.0.0.1:63343/get_events')
+fetch('http://127.0.0.1:5000/get_events')
     .then(response => response.json())
     .then(data => {
         const eventTable = document.getElementById('eventTable');
