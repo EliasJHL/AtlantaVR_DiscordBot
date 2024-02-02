@@ -21,7 +21,7 @@ client = commands.Bot(command_prefix='$', intents=discord.Intents.all(), help_co
 
 
 class ConfirmView(discord.ui.View):
-    def __init__(self, ctx, cur, conn, id, date, roles, name):
+    def __init__(self, ctx, cur, conn, id, date, roles, name, users):
         super().__init__()
         self.ctx = ctx
         self.cur = cur
@@ -30,11 +30,12 @@ class ConfirmView(discord.ui.View):
         self.date = date
         self.roles = roles
         self.name = name
+        self.users = users
 
     @discord.ui.button(label='Confirmer', style=discord.ButtonStyle.green)
     async def confirm(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_message("🔄 Ajout de l'événement en cours...", ephemeral=True)
-        await enregistrer_evenement(self.cur, self.conn, str(self.ctx.message.author), self.id, self.date, self.roles, self.name)
+        await enregistrer_evenement(self.cur, self.conn, str(self.ctx.message.author), self.id, self.date, self.roles, self.name, self.users)
         await asyncio.sleep(2)
         await interaction.edit_original_response(content="**✅ L'événement a été ajouté avec succès"
                                                          " à la base de données.**", view=None)
@@ -49,7 +50,11 @@ class ConfirmView(discord.ui.View):
 async def add(ctx: commands.Context, name: str, rôles: str, date: str):
     try:
         role_list = rôles.split(", ")
+        users = []
+        for i in range(len(role_list)):
+            users.append("None")
         id = int(time.time())
+        users = ' / '.join(users)
         if len(role_list) > 25:
             await ctx.send("Désolé le nombre de rôles à créer est trop élevé pour Discord !\n"
                            "Le maximum est de 25 rôles !")
@@ -57,7 +62,7 @@ async def add(ctx: commands.Context, name: str, rôles: str, date: str):
             await ctx.message.delete()
         else:
             cur, conn = await initialiser_db()
-            view = ConfirmView(ctx, cur, conn, id, date, rôles, name)
+            view = ConfirmView(ctx, cur, conn, id, date, rôles, name, users)
             embed = discord.Embed(title="☑️ Confirmation de l'event...",
                                   description=f"**Nom de l'event:**\n{name}\n**Liste des Rôles:**\n{rôles}\n**Date:**\n{date}",
                                   color=discord.Color.blue())
@@ -147,7 +152,7 @@ async def events(interaction: discord.Interaction):
             if evenement is not None:
                 embed.add_field(
                     name=f"Événement {evenement[1]}",
-                    value=f"Date: {evenement[2]}\nAuteur: {evenement[3]}\nID: {evenement[0]}",
+                    value=f"Date: {evenement[2]}\nAuteur: {evenement[3]}\nID: {evenement[0]}\nTest: {evenement[5]}",
                     inline=False
                 )
         embed.set_footer(text=f"Demandé par {interaction.user} - Date & heure : {now.strftime('%d/%m/%Y %H:%M')}")

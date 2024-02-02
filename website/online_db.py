@@ -18,7 +18,8 @@ async def initialiser_db():
             name TEXT,
             date TEXT,
             auteur TEXT,
-            roles TEXT
+            roles TEXT,
+            user_reservations TEXT
         )
     ''')
     conn.commit()
@@ -32,12 +33,16 @@ async def display_db():
     return evenements
 
 
-async def enregistrer_evenement(cur, conn, auteur, id, date, roles, name):
-    cur.execute('''
-        INSERT INTO evenements (id, name, date, auteur, roles)
-        VALUES (?, ?, ?, ?, ?)
-    ''', (id, name, date, auteur, roles))
-    conn.commit()
+async def enregistrer_evenement(cur, conn, auteur, id, date, roles, name, user_reservations):
+    try:
+        cur.execute('''
+            INSERT INTO evenements (id, name, date, auteur, roles, user_reservations)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ''', (id, name, date, auteur, roles, user_reservations))
+        conn.commit()
+    except Exception as e:
+        print(e)
+        return "Erreur lors de la création du fichier\nMerci de me signaler l'erreur → **helias5605**"
 
 
 async def supprimer_evenement(cur, conn, id):
@@ -47,15 +52,20 @@ async def supprimer_evenement(cur, conn, id):
 
 @app.route('/post_event', methods=['POST'])
 def post_event():
+    users = []
     name = request.form.get('name')
     date = request.form.get('date')
     roles = request.form.get('roles')
+    counter = roles.split(", ")
 
+    for i in range(len(counter)):
+        users.append("None")
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
 
     cur, conn = loop.run_until_complete(initialiser_db())
-    loop.run_until_complete(enregistrer_evenement(cur, conn, 'web_user', int(time.time()), date, roles, name))
+    users = ' / '.join(users)
+    loop.run_until_complete(enregistrer_evenement(cur, conn, 'web_user', int(time.time()), date, roles, name, users))
 
     return 'Event ajouté avec succées à la base de données !'
 
@@ -84,4 +94,4 @@ def get_events():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=63342)
+    app.run(debug=True, port=63343)
