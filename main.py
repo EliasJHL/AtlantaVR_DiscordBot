@@ -17,6 +17,28 @@ with open("./data.json", "r") as f:
 version = data['version']
 server = str(data['server'])
 passed = False
+rep_ball = [
+    "Oui.",
+    "Non.",
+    "C'est certain.",
+    "Sans aucun doute.",
+    "Très probable.",
+    "Il est possible.",
+    "Peu probable.",
+    "Ne compte pas là-dessus.",
+    "Impossible.",
+    "Demande à nouveau plus tard.",
+    "Mieux vaut ne pas te le dire maintenant.",
+    "Impossible de prédire pour le moment.",
+    "Concentre-toi et demande à nouveau.",
+    "Ma réponse est non.",
+    "Mes sources disent non.",
+    "Les signes pointent vers oui.",
+    "Les perspectives sont bonnes.",
+    "Pas sûr.",
+    "Demande à quelqu'un d'autre.",
+    "Je ne peux pas répondre à ça pour le moment."
+]
 client = commands.Bot(command_prefix='$', intents=discord.Intents.all(), help_command=None)
 
 
@@ -83,12 +105,13 @@ async def lancer(interaction: discord.Interaction):
 
 @client.tree.command(name='help', description='Afficher le menu d\'aide')
 async def help(interaction: discord.Interaction):
-    embed = discord.Embed(title="Menu d'aide - AtlantaVR", color=discord.Color.blue())
-    embed.add_field(name="🎨 Amusement", value="🎲 **/lancer**: Faire un lancer de dés aléatoire\n"
-                                              "🧷 **/ping**: Ping le notre bot !", inline=False)
-    embed.add_field(name="🎟️ Events", value="🔦 **/events**: Afficher les événement en cours\n"
-                                            "ℹ️ **/event_info**: Information détailés d'un event", inline=False)
-    embed.set_footer(text=f"Demandé par {interaction.user}")
+    embed = discord.Embed(title="Menu d'aide - AtlantaVR", color=discord.Color.red())
+    embed.add_field(name="-------| Amusement |-------", value="- **/lancer**  :  Faire un lancer de dés aléatoire\n"
+                                                            "- **/ping**  :  Ping moi!\n"
+                                                            "- **$8ball**  :  Pose-moi une question !", inline=False)
+    embed.add_field(name="---------| Events |----------", value="- **/events**  :  Afficher les événement en cours\n"
+                                                               "- **/event_info**  :  Information détailés d'un event\n"
+                                                               "- **/reserver**  :  Réservez votre rôle dans un event", inline=False)
     embed.set_image(url="https://cdn.discordapp.com/attachments/1118913269776793670/1199095326787764355/"
                          "banniere_discord.png?ex=65ca860c&is=65b8110c&hm=352d1d2e87ccb52ca02a4fda942c0fb5"
                          "549bdcff1c6fa2a71472363f141a3717&")
@@ -175,6 +198,15 @@ async def clear(interaction, montant: int):
         await interaction.followup.send(content="Nettoyage terminé")
     else:
         await interaction.response.send_message("Nombre de messages à supprimer trop élevé :(", ephemeral=False)
+
+
+@client.command(name='8ball')
+async def eight_ball(ctx, *, question=None):
+    if question is None:
+        await ctx.send("Tu dois poser une question !")
+        return
+    response = random.choice(rep_ball)
+    await ctx.send(f'{response}')
 
 
 @client.tree.command(name='reserver', description="Permet de réserver un rôle pour un événement")
