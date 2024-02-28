@@ -1,0 +1,21 @@
+@import './base.css';
+
+body {
+    background:
+            radial-gradient(
+                    circle at 50% 0,
+                    rgba(183, 87, 231, 0.5),
+                    rgba(255, 0, 0, 0) 70.71%
+            ),
+            radial-gradient(
+                    circle at 6.7% 75%,
+                    rgba(109, 109, 243, 0.5),
+                    rgba(0, 0, 255, 0) 70.71%
+            ),
+            radial-gradient(
+                    circle at 93.3% 75%,
+                    rgba(34, 78, 203, 0.5),
+                    rgba(0, 255, 0, 0) 70.71%
+            ) beige;
+    border-radius: 50%;
+}
