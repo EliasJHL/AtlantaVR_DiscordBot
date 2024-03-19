@@ -9,16 +9,18 @@ import SupportIcon from './icons/IconSupport.vue'
 
 <template>
   <div id="form_text_barre">
-    <div class="name">
-      <h1>AtlantaVR_Bot</h1>
+    <div class="left_side initial">
+      <div class="name">
+        <h1>AtlantaVR_Bot</h1>
+      </div>
       <div class="connecte">
         <button></button>
       </div>
     </div>
-    <div class="action">
-      <h2>Liste</h2>
-      <h3>Ajouter</h3>
-      <h4>Supprimer</h4>
+    <div class="action initial">
+      <button class="liste">Liste</button>
+      <button class="Ajouter">Ajouter</button>
+      <button class="Supprimer">Supprimer</button>
     </div>
   </div>
 </template>
@@ -29,6 +31,14 @@ import SupportIcon from './icons/IconSupport.vue'
   position: fixed;
   width: 100%;
   height: 100px;
+  display: flex;
+  resize: horizontal;
+}
+
+.left_side {
+  width: 66%;
+  flex: auto;
+  background-color: rgba(208, 11, 11, 0.47);
 }
 
 .name {
@@ -43,40 +53,47 @@ import SupportIcon from './icons/IconSupport.vue'
 }
 
 .action {
-  margin-left: 78%;
-  margin-top: -72px;
+  right: 10px;
+  margin-top: 22px;
+  width: 600px;
+  flex: initial;
+  background-color: rgba(217, 196, 196, 0.47);
 }
 
-.action h2 {
+.liste {
+  background-color: transparent;
+  border-color: transparent;
   color: white;
   font-family: Ubuntu, serif;
   font-weight: bold;
   font-size: 36px;
 }
 
-.action h3 {
+.Ajouter {
+  background-color: transparent;
+  border-color: transparent;
   color: white;
   font-family: Ubuntu, serif;
   font-weight: bold;
   font-size: 36px;
-  margin-left: 140px;
-  margin-top: -70px;
+  margin-left: 25px;
 }
 
-.action h4 {
+.Supprimer {
+  background-color: transparent;
+  border-color: transparent;
   color: white;
   font-family: Ubuntu, serif;
   font-weight: bold;
   font-size: 36px;
-  margin-left: 320px;
-  margin-top: -75px;
+  margin-left: 25px;
 }
 
 .connecte {
   z-index: 2;
   border-radius: 10px;
-  margin-left: 12%;
-  margin-top: -60px ;
+  margin-left: 300px;
+  margin-top: -60px;
   height: 36px;
   width: 36px;
   background-color: #9b9b9b;
@@ -84,10 +101,37 @@ import SupportIcon from './icons/IconSupport.vue'
 
 .connecte button {
   background-color: green;
+  margin: 28%;
   height: 15px;
   width: 15px;
-  margin: 28%;
   border-radius: 10px;
   border-color: transparent;
+}
+
+@media (max-width: 1200px) {
+  .left_side {
+    width: 55%;
+  }
+
+  .liste {
+    font-size: 32px;
+  }
+
+  .Ajouter {
+    font-size: 32px;
+  }
+
+  .Supprimer {
+    font-size: 32px;
+  }
+
+  .connecte {
+    margin-top: -55px;
+    margin-left: 260px;
+  }
+
+  .name h1 {
+    font-size: 32px;
+  }
 }
 </style>
