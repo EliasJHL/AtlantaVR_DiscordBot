@@ -4,6 +4,7 @@ import time
 import json
 from flask import Flask, request
 from flask_cors import CORS
+from flask import jsonify
 
 app = Flask(__name__)
 CORS(app)
@@ -91,6 +92,13 @@ def get_events():
     cur, conn = loop.run_until_complete(initialiser_db())
     evenements = loop.run_until_complete(display_db())
     return json.dumps(evenements)
+
+
+@app.route('/update_event', methods=['GET'])
+def get_status():
+    with open("../discord_bot/data.json", "r") as f:
+        data = json.load(f)
+    return jsonify(data['status'])
 
 
 if __name__ == '__main__':

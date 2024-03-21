@@ -4,4 +4,5 @@ pynacl
 ffmpeg-python
 discord~=2.3.2
 requests~=2.31.0
+flask_cors
 flask

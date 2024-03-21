@@ -1,8 +1,133 @@
 <!DOCTYPE html>
-<source src="https://assets.codepen.io/3364143/7btrrd.mp4" type="video/mp4">
 <html lang="fr">
 <head>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        body {
+    font: normal 14px/100% "Ubuntu", AndaleMono, monospace;
+    position: absolute;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+    margin: auto;
+    @media screen and (max-width: 480px) {
+        padding: 0.8em;
+    }
+}
+
+table{
+  border-collapse: collapse;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+th {
+  background-color: #000000;
+  color: white;
+}
+
+th, td{
+  border: 1px solid black;
+  padding: 10px;
+}
+
+#eventTable {
+    max-width: 100%;
+    max-height: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+#addEventForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#deleteEventForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bn5 {
+  padding: 0.6em 2em;
+  border: none;
+  outline: none;
+  color: rgb(255, 255, 255);
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+}
+
+.form__group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 10px;
+  width: 50%;
+}
+
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #9b9b9b;
+  outline: 0;
+  font-size: 1.3rem;
+  color: #fff;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:placeholder-shown ~ .form__label {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+  }
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #9b9b9b;
+}
+
+.form__field:focus {
+  ~ .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #11998e;
+    font-weight:700;
+  }
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #11998e, #38ef7d);
+  border-image-slice: 1;
+}
+
+.form__field{
+  &:required,&:invalid { box-shadow:none; }
+    color: black;
+}
+    </style>
     <title>Post an Event</title>
 </head>
 <body>
@@ -116,5 +241,8 @@ fetch('http://127.0.0.1:5000/get_events')
             eventTable.appendChild(tableRow);
         });
     });
+fetch('http://127.0.0.1:5000/update_event')
+    .then(response => response.json())
+    .then(data => console.log(data));
 </script>
 </html>

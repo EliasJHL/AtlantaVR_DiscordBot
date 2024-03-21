@@ -10,7 +10,7 @@ import json
 
 
 async def initialiser_db():
-    conn = sqlite3.connect('evenements.db')
+    conn = sqlite3.connect('../evenements.db')
     cur = conn.cursor()
     cur.execute('''
         CREATE TABLE IF NOT EXISTS evenements (
