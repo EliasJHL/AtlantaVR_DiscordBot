@@ -161,19 +161,18 @@ async def events_info(interaction: discord.Interaction, id: int):
         if stock_id != 0:
             embed = discord.Embed(title=f"Événement {evenement[nb][1]} du {evenement[nb][2]}", color=discord.Color.blue())
             for i in range(len(evenement[nb][4].split(", "))):
-                if random.randint(0, 1) == 0:
-                    stock = f"✅ Disponible - USERNAME"
-                else:
-                    stock = f"❌ Indisponible - USERNAME"
+                stock = f"✅ Disponible - USERNAME"
+                #else:
+                #    stock = f"❌ Indisponible - USERNAME"
                 embed.add_field(
                     name=f"Rôle {i + 1} - {evenement[nb][4].split(', ')[i]}",
                     value=stock,
                     inline=False
                 )
             embed.set_footer(text=f"Créé par {evenement[nb][3]} - ID : {evenement[nb][0]}")
-            #embed.set_image(url="https://cdn.discordapp.com/attachments/1118913269776793670/1199095326787764355/"
-            #                    "banniere_discord.png?ex=65ca860c&is=65b8110c&hm=352d1d2e87ccb52ca02a4fda942c0fb5"
-            #                    "549bdcff1c6fa2a71472363f141a3717&")
+            embed.set_image(url="https://cdn.discordapp.com/attachments/1118913269776793670/1199095326787764355/"
+                                "banniere_discord.png?ex=65ca860c&is=65b8110c&hm=352d1d2e87ccb52ca02a4fda942c0fb5"
+                                "549bdcff1c6fa2a71472363f141a3717&")
             await interaction.response.send_message(embed=embed, ephemeral=False)
         else:
             await interaction.response.send_message("ID non trouvé dans les events en cours", ephemeral=False)
