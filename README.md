@@ -13,9 +13,9 @@
 
 ## Future Features
 
-- **Ticket Support:** Create tickets for users to request support.
+- **Ticket Support:** Create tickets for users to request support. [NOT IMPLEMENTED]
 - **Moderation:** Basic server moderation commands.
-- **User Information:** Get detailed information about a user.
+- **User Information:** Get detailed information about a user. [NOT IMPLEMENTED]
 - **Entertainment:** Fun commands for user engagement.
 
 ## Configuration & Setup
@@ -30,7 +30,8 @@
    {
        "token": "YOUR_BOT_TOKEN_HERE",
        "version": "YOUR_VERSION",
-       "server": "SERVER NAME"
+       "server": "SERVER NAME",
+       "status": 1
    }
    
 ## Bot Configuration
