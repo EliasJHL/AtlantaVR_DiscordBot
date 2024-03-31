@@ -47,4 +47,4 @@
 ## Contact
 For any inquiries or suggestions, contact me via Discord : `helias5605`.
 
-©2024 AtlantaVR | Version: **V0.1.2 alpha**
+©2024 AtlantaVR | Version: **V0.1.2 alpha** Developpement en cours
